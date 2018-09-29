@@ -1,10 +1,9 @@
-import { ContentBox } from '@dabapps/roe';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
 import { getAllRepos } from '^/client/actions';
+import RepoItem from '^/client/repo-item';
 import { StoreState } from '^/client/store';
-import { Repo } from '^/client/types';
 
 type StateProps = Pick<StoreState, 'repos'>;
 
@@ -39,34 +38,7 @@ class List extends PureComponent<Props> {
             </p>
           ) : (
             <ul className="list-style-none">
-              {data && data.map((repo: Repo) => {
-                const details = [];
-
-                if (repo.permissions.admin) {
-                  details.push('admin');
-                }
-
-                if (repo.fork) {
-                  details.push('fork');
-                }
-
-                return (
-                  <ContentBox component="li" key={repo.id}>
-                    <p className="bold">
-                      <a href={repo.svn_url}>
-                        {repo.full_name}
-                      </a>
-                      {
-                        Boolean(details.length) && (
-                          <span className="margin-left-base">
-                            ({details.join(', ')})
-                          </span>
-                        )
-                      }
-                    </p>
-                  </ContentBox>
-                );
-              })}
+              {data && data.map((repo) => <RepoItem key={repo.id} repo={repo} />)}
             </ul>
           )
         }
