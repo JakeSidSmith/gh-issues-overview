@@ -86,7 +86,8 @@ app.post('/logout', (request, response) => {
     },
   })
     .then(() => {
-      handleAuthorized(request, response);
+      response.clearCookie('github-token');
+      response.redirect('/');
     })
     .catch((error) => {
       console.error(error);
