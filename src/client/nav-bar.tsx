@@ -29,7 +29,7 @@ const NavBar = () => (
           Boolean(window.AUTHORIZED) && (
             <NavItem>
               <form action="/logout" method="POST">
-                <Button type="submit">
+                <Button className="hollow" type="submit">
                   Logout
                 </Button>
               </form>
