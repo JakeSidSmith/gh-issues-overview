@@ -13,11 +13,11 @@ const RepoItem = ({repo}: Props) => {
   const details = [];
 
   if (repo.permissions.admin) {
-    details.push('admin');
+    details.push('Admin');
   }
 
   if (repo.fork) {
-    details.push('fork');
+    details.push('Fork');
   }
 
   return (
@@ -31,6 +31,13 @@ const RepoItem = ({repo}: Props) => {
             <span className="margin-left-base">
               ({details.join(', ')})
             </span>
+          )
+        }
+        {
+          Boolean(repo.homepage) && (
+            <a className="margin-left-base" href={repo.homepage}>
+              Homepage
+            </a>
           )
         }
       </p>
