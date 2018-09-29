@@ -20,14 +20,6 @@ class List extends PureComponent<Props> {
   public render () {
     const { loading, error, data } = this.props.repos;
 
-    if (loading) {
-      return (
-        <p>
-          Loading...
-        </p>
-      );
-    }
-
     if (error) {
       return (
         <p className="error">
@@ -36,22 +28,31 @@ class List extends PureComponent<Props> {
       );
     }
 
-    if (data && data && data.length) {
-      return (
-        <ul>
-          {data.map((repo: any) => (
-            <li>
-              {repo.full_name}
-            </li>
-          ))}
-        </ul>
-      );
-    }
-
     return (
-      <p>
-        No repos
-      </p>
+      <>
+        {
+          !loading && !data ? (
+            <p>
+              No repos
+            </p>
+          ) : (
+            <ul>
+              {data && data.map((repo: any) => (
+                <li>
+                  {repo.full_name}
+                </li>
+              ))}
+            </ul>
+          )
+        }
+        {
+          loading && (
+            <p>
+              Loading...
+            </p>
+          )
+        }
+      </>
     );
   }
 }
