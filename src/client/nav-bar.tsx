@@ -11,7 +11,9 @@ const NavBar = () => (
   <RoeNavBar shy>
     <Container>
       <h1 className="font-size-base display-inline-block margin-vertical-small">
-        GitHub Issues Overview
+        <code className="padding-small padding-horizontal-base">
+          gh-issues-overview
+        </code>
       </h1>
       <Nav className="float-right">
         {
