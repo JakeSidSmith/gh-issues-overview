@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import cookieParser from 'cookie-parser';
 import express, { Request, Response } from 'express';
 import fs from 'fs';
@@ -73,6 +73,26 @@ const handleAccessToken = (request: Request, response: Response) => {
     response.send(mustache.render(INDEX_TEMPLATE, {ERROR_MESSAGE: error.message}));
   });
 };
+
+app.use('/api', (request, response) => {
+  const cookieParams = queryString.parse(request.cookies['github-token']);
+
+  axios.request({
+    url: `https://api.github.com${request.path}`,
+    method: request.method,
+    params: {
+      ...(request.params || {}),
+      ...(cookieParams || {}),
+    },
+  })
+    .then((res) => {
+      response.send(res.data);
+    })
+    .catch((error: AxiosError) => {
+      response.status(error.response ? error.response.status : 0);
+      response.send(error.response ? error.response.data : {message: error.message});
+    });
+});
 
 app.post('/logout', (request, response) => {
   const { access_token } = queryString.parse(request.cookies['github-token']);
