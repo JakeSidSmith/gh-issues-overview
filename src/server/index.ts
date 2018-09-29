@@ -86,6 +86,12 @@ app.use('/api', (request, response) => {
     },
   })
     .then((res) => {
+      const headerKeys = Object.keys(res.headers);
+
+      headerKeys.forEach((key) => {
+        response.header(key, res.headers[key]);
+      });
+
       response.send(res.data);
     })
     .catch((error: AxiosError) => {
