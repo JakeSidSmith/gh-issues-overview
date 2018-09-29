@@ -8,10 +8,11 @@ import { applyMiddleware, combineReducers, createStore } from 'redux';
 import thunk from 'redux-thunk';
 
 import * as reducers from '^/client/reducers';
-import { Repos } from '^/client/types';
+import { Issues, Repos } from '^/client/types';
 
 export interface StoreState {
   repos: ComquestRequestData<Repos> & ComquestRequestError & ComquestRequestState;
+  issues: ComquestRequestData<Issues> & ComquestRequestError & ComquestRequestState;
 }
 
 const combinedReducers = combineReducers<StoreState>(reducers);

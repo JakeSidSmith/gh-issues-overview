@@ -2,15 +2,22 @@ import { AxiosError, AxiosPromise, AxiosResponse } from 'axios';
 import { createComquestRequestAction } from 'comquest';
 import parseLinkHeader from 'parse-link-header';
 import { AnyAction } from 'redux';
-import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { ThunkDispatch } from 'redux-thunk';
 
-import { GET_REPOS } from '^/client/action-types';
+import { GET_ISSUES, GET_REPOS } from '^/client/action-types';
 import { StoreState } from '^/client/store';
 import { getProxyUrl } from '^/client/utils';
 
 export const getRepos = createComquestRequestAction(GET_REPOS, {
   method: 'GET',
   url: '/api/user/repos',
+});
+
+export const getIssues = createComquestRequestAction(GET_ISSUES, {
+  method: 'GET',
+  params: {
+    per_page: 100,
+  },
 });
 
 type DispatchComquestAction = ThunkDispatch<StoreState, undefined, AnyAction>;

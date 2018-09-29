@@ -14,3 +14,14 @@ export interface Repo {
   fork: boolean;
   permissions: Permissions;
 }
+
+export interface Issue {
+  title: string;
+  number: number;
+  labels: ReadonlyArray<string>;
+  id: number;
+}
+
+export interface Issues {
+  [i: string]: ReadonlyArray<Issue> | undefined;
+}
