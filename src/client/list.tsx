@@ -36,10 +36,10 @@ class List extends PureComponent<Props> {
       );
     }
 
-    if (data && data.data && data.data.length) {
+    if (data && data && data.length) {
       return (
         <ul>
-          {data.data.map((repo: any) => (
+          {data.map((repo: any) => (
             <li>
               {repo.full_name}
             </li>
