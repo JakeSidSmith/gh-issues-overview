@@ -1,5 +1,5 @@
-import { ContentBox } from '@dabapps/roe';
-import React from 'react';
+import { ContentBox, SpacedGroup } from '@dabapps/roe';
+import React, { PureComponent } from 'react';
 
 import { Repo } from '^/client/types';
 
@@ -9,40 +9,43 @@ interface OwnProps {
 
 type Props = OwnProps;
 
-const RepoItem = ({repo}: Props) => {
-  const details = [];
+class RepoItem extends PureComponent<Props> {
+  public render () {
+    const { repo } = this.props;
+    const details = [];
 
-  if (repo.permissions.admin) {
-    details.push('Admin');
+    if (repo.permissions.admin) {
+      details.push('Admin');
+    }
+
+    if (repo.fork) {
+      details.push('Fork');
+    }
+
+    return (
+      <ContentBox component="li">
+        <SpacedGroup component="p" className="bold">
+          <a href={repo.svn_url}>
+            {repo.full_name}
+          </a>
+          {
+            Boolean(details.length) && (
+              <span>
+                ({details.join(', ')})
+              </span>
+            )
+          }
+          {
+            Boolean(repo.homepage) && (
+              <a href={repo.homepage}>
+                Homepage
+              </a>
+            )
+          }
+        </SpacedGroup>
+      </ContentBox>
+    );
   }
-
-  if (repo.fork) {
-    details.push('Fork');
-  }
-
-  return (
-    <ContentBox component="li">
-      <p className="bold">
-        <a href={repo.svn_url}>
-          {repo.full_name}
-        </a>
-        {
-          Boolean(details.length) && (
-            <span className="margin-left-base">
-              ({details.join(', ')})
-            </span>
-          )
-        }
-        {
-          Boolean(repo.homepage) && (
-            <a className="margin-left-base" href={repo.homepage}>
-              Homepage
-            </a>
-          )
-        }
-      </p>
-    </ContentBox>
-  );
-};
+}
 
 export default RepoItem;
