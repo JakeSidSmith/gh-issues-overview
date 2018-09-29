@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -e
+
+npm run build
+
+concurrently \
+  --names " server    , watch-js  , watch-css " \
+  --prefix-colors "green,red,cyan" \
+  --prefix "name" \
+  "npm run start" \
+  "npm run watch-js" \
+  "npm run watch-css"
