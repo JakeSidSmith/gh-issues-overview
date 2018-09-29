@@ -24,20 +24,20 @@ class RepoItem extends PureComponent<Props> {
 
     return (
       <ContentBox component="li">
-        <SpacedGroup component="p" className="bold">
-          <a href={repo.svn_url}>
+        <SpacedGroup component="p">
+          <a className="bold" href={repo.svn_url}>
             {repo.full_name}
           </a>
           {
             Boolean(details.length) && (
-              <span>
+              <span className="font-size-small">
                 ({details.join(', ')})
               </span>
             )
           }
           {
             Boolean(repo.homepage) && (
-              <a href={repo.homepage}>
+              <a className="font-size-small" href={repo.homepage}>
                 Homepage
               </a>
             )
