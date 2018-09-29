@@ -7,7 +7,7 @@ export default class App extends PureComponent {
   public render () {
     if (window.GITHUB_URL) {
       return (
-        <a href={window.GITHUB_URL}>
+        <a className="button primary" href={window.GITHUB_URL}>
           Login with GitHub
         </a>
       );
@@ -19,14 +19,14 @@ export default class App extends PureComponent {
       );
     } else if (window.AUTHORIZED) {
       return (
-        <Container>
+        <>
           <form action="/logout" method="POST">
             <Button type="submit">
               Logout
             </Button>
           </form>
           <List />
-        </Container>
+        </>
       );
     } else {
       return (

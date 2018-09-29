@@ -33,7 +33,7 @@ export const getAllRepos = () => (dispatch: DispatchComquestAction) => {
   };
 
   createRepoRequest = (url?: string) => {
-    const params = {per_page: 50};
+    const params = {per_page: 10};
     return dispatch(getRepos(typeof url === 'string' ? {url, params} : {params}))
       .then(handleResponse);
   };
