@@ -1,20 +1,20 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
-import { getRepos } from '^/client/actions';
+import { getAllRepos } from '^/client/actions';
 import { StoreState } from '^/client/store';
 
 type StateProps = Pick<StoreState, 'repos'>;
 
 interface DispatchProps {
-  getRepos: typeof getRepos;
+  getAllRepos: typeof getAllRepos;
 }
 
 type Props = StateProps & DispatchProps;
 
 class List extends PureComponent<Props> {
   public componentDidMount () {
-    this.props.getRepos();
+    this.props.getAllRepos();
   }
 
   public render () {
@@ -62,4 +62,4 @@ export const mapStateToProps = ({repos}: StoreState): StateProps => {
   };
 };
 
-export default connect(mapStateToProps, { getRepos })(List);
+export default connect(mapStateToProps, { getAllRepos })(List);
