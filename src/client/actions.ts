@@ -1,6 +1,8 @@
+import { AxiosError, AxiosPromise, AxiosResponse } from 'axios';
 import { createComquestRequestAction } from 'comquest';
+import parseLinkHeader from 'parse-link-header';
 import { AnyAction } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
 import { GET_REPOS } from '^/client/action-types';
 import { StoreState } from '^/client/store';
@@ -13,9 +15,28 @@ export const getRepos = createComquestRequestAction(GET_REPOS, {
 type DispatchComquestAction = ThunkDispatch<StoreState, undefined, AnyAction>;
 
 export const getAllRepos = () => (dispatch: DispatchComquestAction) => {
-  dispatch(getRepos({params: {per_page: 100}}, {throwErrors: true}))
-    .then((response) => {
-      console.log(response);
-    })
-    .catch(() => null);
+  let createRepoRequest: (url?: string) => Promise<AxiosResponse | AxiosError | undefined>;
+
+  const handleResponse = (response: AxiosResponse | AxiosError) => {
+    if (response instanceof Error) {
+      // Ignore errors
+      return undefined;
+    }
+
+    if (typeof response.headers.link === 'string') {
+      const links = parseLinkHeader(response.headers.link);
+
+      if (links && links.next) {
+        createRepoRequest(links.next.url);
+      }
+    }
+  };
+
+  createRepoRequest = (url?: string) => {
+    const params = {per_page: 50};
+    return dispatch(getRepos(typeof url === 'string' ? {url, params} : {params}))
+      .then(handleResponse);
+  };
+
+  createRepoRequest();
 };
