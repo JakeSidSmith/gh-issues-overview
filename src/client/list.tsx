@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { getAllRepos } from '^/client/actions';
 import { StoreState } from '^/client/store';
+import { Repo } from '^/client/types';
 
 type StateProps = Pick<StoreState, 'repos'>;
 
@@ -37,8 +38,8 @@ class List extends PureComponent<Props> {
             </p>
           ) : (
             <ul>
-              {data && data.map((repo: any) => (
-                <li>
+              {data && data.map((repo: Repo) => (
+                <li key={repo.id}>
                   {repo.full_name}
                 </li>
               ))}
