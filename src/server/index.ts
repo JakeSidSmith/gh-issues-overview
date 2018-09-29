@@ -78,12 +78,9 @@ app.use('/api', (request, response) => {
   const cookieParams = queryString.parse(request.cookies['github-token']);
 
   axios.request({
-    url: `https://api.github.com${request.path}`,
+    url: `https://api.github.com${request.url}`,
     method: request.method,
-    params: {
-      ...(request.params || {}),
-      ...(cookieParams || {}),
-    },
+    params: cookieParams,
   })
     .then((res) => {
       const headerKeys = Object.keys(res.headers);
