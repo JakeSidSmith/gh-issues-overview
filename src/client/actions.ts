@@ -6,6 +6,7 @@ import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
 import { GET_REPOS } from '^/client/action-types';
 import { StoreState } from '^/client/store';
+import { getProxyUrl } from '^/client/utils';
 
 export const getRepos = createComquestRequestAction(GET_REPOS, {
   method: 'GET',
@@ -34,7 +35,7 @@ export const getAllRepos = () => (dispatch: DispatchComquestAction) => {
 
   createRepoRequest = (url?: string) => {
     const params = {per_page: 10};
-    return dispatch(getRepos(typeof url === 'string' ? {url, params} : {params}))
+    return dispatch(getRepos(typeof url === 'string' ? {url: getProxyUrl(url), params} : {params}))
       .then(handleResponse);
   };
 
