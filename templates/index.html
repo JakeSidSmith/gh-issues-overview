@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Simple GitHub issues overview</title>
+  <link rel="shortcut icon" href="/static/images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="/bundle.css">
+</head>
+<body>
+
+  <div id="app" class="app"></div>
+
+  <noscript>
+    <p>
+      This page requires JavaScript.
+    </p>
+  </noscript>
+
+  <script>
+    {{#GITHUB_URL}}
+    window.GITHUB_URL = '{{{GITHUB_URL}}}';
+    {{/GITHUB_URL}}
+    {{#AUTHORIZED}}
+    window.AUTHORIZED = '{{{AUTHORIZED}}}';
+    {{/AUTHORIZED}}
+    {{#ERROR_MESSAGE}}
+    window.ERROR_MESSAGE = '{{{ERROR_MESSAGE}}}';
+    {{/ERROR_MESSAGE}}
+  </script>
+
+  <script src="/bundle.js"></script>
+
+</body>
+</html>
