@@ -59,7 +59,7 @@ export const issues = composeComquestReducers(
 
         if (urlIndex >= 0) {
           return {
-            loadingUrls: state.loadingUrls!.filter((value, index) => index !== urlIndex),
+            loadingUrls: state.loadingUrls!.filter((_value, index) => index !== urlIndex),
           };
         }
 

@@ -18,7 +18,7 @@ const INDEX_TEMPLATE = fs.readFileSync(path.resolve(__dirname, '../../templates/
 
 app.use(cookieParser());
 
-const handleUnauthorized = (request: Request, response: Response) => {
+const handleUnauthorized = (_request: Request, response: Response) => {
   const state = uuid();
   const gitHubUrl = `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}` +
     `&redirect_uri=${APP_URL}` +

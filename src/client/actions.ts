@@ -1,4 +1,4 @@
-import { AxiosError, AxiosPromise, AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { createComquestRequestAction } from 'comquest';
 import parseLinkHeader from 'parse-link-header';
 import { AnyAction } from 'redux';

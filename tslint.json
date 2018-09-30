@@ -38,6 +38,7 @@
       }
     ],
     "space-before-function-paren": [2, "always"],
+    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-pascal-case"],
     "strict-type-predicates": true,
 
     "object-literal-sort-keys": false,

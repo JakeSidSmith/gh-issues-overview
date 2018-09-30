@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Issue, Repo } from '^/client/types';
+import { Issue } from '^/client/types';
 import { SpacedGroup } from '../../node_modules/@dabapps/roe';
 
 interface OwnProps {
