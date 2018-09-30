@@ -1,9 +1,10 @@
-import { ContentBox, SpacedGroup } from '@dabapps/roe';
+import { Badge, Collapse, ContentBox, SpacedGroup } from '@dabapps/roe';
+import classNames from 'classnames';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import urlTemplate from 'url-template';
 
-import { getIssues } from '^/client/actions';
+import { getIssues, toggleRepoCollapse } from '^/client/actions';
 import IssueItem from '^/client/issue-item';
 import { StoreState } from '^/client/store';
 import { Repo } from '^/client/types';
@@ -13,10 +14,11 @@ interface OwnProps {
   repo: Repo;
 }
 
-type StateProps = Pick<StoreState, 'issues'>;
+type StateProps = Pick<StoreState, 'issues' | 'collapsedRepos'>;
 
 interface DispatchProps {
   getIssues: typeof getIssues;
+  toggleRepoCollapse: typeof toggleRepoCollapse;
 }
 
 type Props = OwnProps & StateProps & DispatchProps;
@@ -35,7 +37,7 @@ class RepoItem extends PureComponent<Props> {
   }
 
   public render () {
-    const { repo, issues: { loadingUrls, data } } = this.props;
+    const { repo, issues: { loadingUrls, data }, collapsedRepos } = this.props;
     const details = [];
     const issues = data && data[this.url];
 
@@ -49,7 +51,26 @@ class RepoItem extends PureComponent<Props> {
 
     return (
       <ContentBox component="li">
-        <SpacedGroup component="p">
+        <SpacedGroup className="float-right margin-vertical-large margin-left-base">
+          {
+            Boolean(loadingUrls && loadingUrls.indexOf(this.url) >= 0) && (
+              <span>
+                Loading...
+              </span>
+            )
+          }
+          {
+            issues && (
+              <Badge
+                className={classNames('clickable', {error: issues.length})}
+                onClick={this.onToggleCollapse}
+              >
+                {issues && `${collapsedRepos.has(repo.id) ? 'View' : 'Hide'} ${issues.length}`}
+              </Badge>
+            )
+          }
+        </SpacedGroup>
+        <SpacedGroup block className="margin-vertical-large break-word">
           <a className="bold" href={repo.svn_url}>
             {repo.full_name}
           </a>
@@ -67,39 +88,43 @@ class RepoItem extends PureComponent<Props> {
               </a>
             )
           }
+        </SpacedGroup>
+        <Collapse open={!collapsedRepos.has(repo.id)} maxCollapsedHeight={0}>
           {
             issues && (
-              <span className="float-right">
-                {issues.length}
-              </span>
+              <ul className="list-style-none">
+                {
+                  issues.length ? issues.map((issue) => <IssueItem key={issue.id} issue={issue} />) : (
+                    <li>
+                      No issues
+                    </li>
+                  )
+                }
+              </ul>
             )
           }
-        </SpacedGroup>
-        {
-          issues && (
-            <ul className="list-style-none">
-              {
-                issues.map((issue) => <IssueItem key={issue.id} issue={issue} />)
-              }
-            </ul>
-          )
-        }
-        {
-          loadingUrls && loadingUrls.indexOf(this.url) >= 0 && (
-            <p>
-              Loading...
-            </p>
-          )
-        }
+          {
+            loadingUrls && loadingUrls.indexOf(this.url) >= 0 && (
+              <p>
+                Loading...
+              </p>
+            )
+          }
+        </Collapse>
       </ContentBox>
     );
   }
+
+  private onToggleCollapse = () => {
+    this.props.toggleRepoCollapse(this.props.repo.id);
+  }
 }
 
-export const mapStateToProps = ({issues}: StoreState): StateProps => {
+export const mapStateToProps = ({issues, collapsedRepos}: StoreState): StateProps => {
   return {
     issues,
+    collapsedRepos,
   };
 };
 
-export default connect(mapStateToProps, {getIssues})(RepoItem);
+export default connect(mapStateToProps, {getIssues, toggleRepoCollapse})(RepoItem);

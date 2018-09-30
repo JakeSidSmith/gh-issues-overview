@@ -4,9 +4,14 @@ import parseLinkHeader from 'parse-link-header';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 
-import { GET_ISSUES, GET_REPOS } from '^/client/action-types';
+import { GET_ISSUES, GET_REPOS, TOGGLE_REPO_COLLAPSE } from '^/client/action-types';
 import { StoreState } from '^/client/store';
 import { getProxyUrl } from '^/client/utils';
+
+export const toggleRepoCollapse = (id: number) => ({
+  type: TOGGLE_REPO_COLLAPSE,
+  payload: id,
+});
 
 export const getRepos = createComquestRequestAction(GET_REPOS, {
   method: 'GET',

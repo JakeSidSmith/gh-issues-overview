@@ -13,6 +13,7 @@ import { Issues, Repos } from '^/client/types';
 export interface StoreState {
   repos: ComquestRequestData<Repos> & ComquestRequestError & ComquestRequestState;
   issues: ComquestRequestData<Issues> & ComquestRequestError & reducers.IssuesRequestState;
+  collapsedRepos: reducers.CollapsedRepos;
 }
 
 const combinedReducers = combineReducers<StoreState>(reducers);
