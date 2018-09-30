@@ -20,6 +20,8 @@ export interface Issue {
   number: number;
   labels: ReadonlyArray<string>;
   id: number;
+  html_url: string;
+  pull_request?: {};
 }
 
 export interface Issues {

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import urlTemplate from 'url-template';
 
 import { getIssues } from '^/client/actions';
+import IssueItem from '^/client/issue-item';
 import { StoreState } from '^/client/store';
 import { Repo } from '^/client/types';
 import { getProxyUrl } from '^/client/utils';
@@ -66,18 +67,19 @@ class RepoItem extends PureComponent<Props> {
               </a>
             )
           }
+          {
+            issues && (
+              <span className="float-right">
+                {issues.length}
+              </span>
+            )
+          }
         </SpacedGroup>
         {
           issues && (
             <ul className="list-style-none">
               {
-                issues.map((issue) => (
-                  <li key={issue.id}>
-                    <a href={`${repo.svn_url}/issues/${issue.number}`}>
-                      {issue.title}
-                    </a>
-                  </li>
-                ))
+                issues.map((issue) => <IssueItem key={issue.id} issue={issue} />)
               }
             </ul>
           )
