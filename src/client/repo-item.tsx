@@ -34,7 +34,7 @@ class RepoItem extends PureComponent<Props> {
   }
 
   public render () {
-    const { repo, issues: { loading, data } } = this.props;
+    const { repo, issues: { loadingUrls, data } } = this.props;
     const details = [];
     const issues = data && data[this.url];
 
@@ -83,7 +83,7 @@ class RepoItem extends PureComponent<Props> {
           )
         }
         {
-          loading && (
+          loadingUrls && loadingUrls.indexOf(this.url) >= 0 && (
             <p>
               Loading...
             </p>

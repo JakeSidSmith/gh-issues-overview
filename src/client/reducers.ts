@@ -1,6 +1,5 @@
 import {
   composeComquestReducers,
-  ComquestAction,
   ComquestRequestData,
   ComquestSuccessAction,
   createComquestRequestErrorReducer,
@@ -26,6 +25,10 @@ export const repos = composeComquestReducers(
   createComquestRequestStateReducer(GET_REPOS)
 );
 
+export interface IssuesRequestState {
+  loadingUrls?: ReadonlyArray<string>;
+}
+
 export const issues = composeComquestReducers(
   (state: ComquestRequestData<Issues> = {}, action: AnyAction) => {
     switch (action.type) {
@@ -44,5 +47,25 @@ export const issues = composeComquestReducers(
     }
   },
   createComquestRequestErrorReducer(GET_ISSUES),
-  createComquestRequestStateReducer(GET_ISSUES)
+  (state: IssuesRequestState = {}, action: AnyAction) => {
+    switch (action.type) {
+      case GET_ISSUES.REQUEST:
+        return {
+          loadingUrls: (state.loadingUrls || []).concat(action.meta.url as string),
+        };
+      case GET_ISSUES.SUCCESS:
+      case GET_ISSUES.FAILURE:
+        const urlIndex = state.loadingUrls ? state.loadingUrls.indexOf(action.meta.url) : -1;
+
+        if (urlIndex >= 0) {
+          return {
+            loadingUrls: state.loadingUrls!.filter((value, index) => index !== urlIndex),
+          };
+        }
+
+        return state;
+      default:
+        return state;
+    }
+  }
 );
