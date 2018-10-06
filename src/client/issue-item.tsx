@@ -24,8 +24,13 @@ const IssueItem = ({issue}: Props) => (
       }
       {
         issue.labels.map((label) => (
-          <Badge key={label.id} style={{backgroundColor: `#${label.color}`}}>
-            {label.name}
+          <Badge
+            key={label.id}
+            style={{backgroundColor: `#${label.color}`}}
+          >
+            <span className="text-contrast">
+              {label.name}
+            </span>
           </Badge>
         ))
       }
