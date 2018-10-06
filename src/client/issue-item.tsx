@@ -1,7 +1,7 @@
+import { Badge, SpacedGroup } from '@dabapps/roe';
 import React from 'react';
 
 import { Issue } from '^/client/types';
-import { SpacedGroup } from '../../node_modules/@dabapps/roe';
 
 interface OwnProps {
   issue: Issue;
@@ -21,6 +21,13 @@ const IssueItem = ({issue}: Props) => (
             (Pull request)
           </span>
         )
+      }
+      {
+        issue.labels.map((label) => (
+          <Badge key={label.id} style={{backgroundColor: `#${label.color}`}}>
+            {label.name}
+          </Badge>
+        ))
       }
     </SpacedGroup>
   </li>

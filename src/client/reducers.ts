@@ -5,10 +5,10 @@ import {
   createComquestRequestErrorReducer,
   createComquestRequestStateReducer,
 } from 'comquest';
+import { AnyAction } from 'redux';
 
 import { GET_ISSUES, GET_REPOS, TOGGLE_REPO_COLLAPSE } from '^/client/action-types';
 import { Issue, Issues, Repos } from '^/client/types';
-import { AnyAction } from '../../node_modules/redux';
 
 export const repos = composeComquestReducers(
   (state: ComquestRequestData<Repos> = {}, action: AnyAction) => {

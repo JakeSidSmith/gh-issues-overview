@@ -15,10 +15,17 @@ export interface Repo {
   permissions: Permissions;
 }
 
+export interface Label {
+  color: string;
+  default: boolean;
+  id: number;
+  name: string;
+}
+
 export interface Issue {
   title: string;
   number: number;
-  labels: ReadonlyArray<string>;
+  labels: ReadonlyArray<Label>;
   id: number;
   html_url: string;
   pull_request?: {};
